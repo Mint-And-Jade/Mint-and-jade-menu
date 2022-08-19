@@ -22,7 +22,7 @@ export default {
         return {
             hot_drinks: ['Espresso Coffee', 'Double Espresso', 'Café Latte', 'Cappuccino', 'Nescafe', 'Americano', 'Tea'],
             hot_drinks_: 'Hot Drinks',
-            hot_drinks_note: 'you can add flavored syrups to all off the above',
+            hot_drinks_note: 'you can add flavored syrups to all of the above',
 
             soft_drinks: ['Soda', 'Carbonated Water', 'Water', 'Energy Drink'],
             soft_drinks_: 'Soft Drinks',
