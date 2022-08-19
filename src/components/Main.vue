@@ -24,7 +24,7 @@ export default {
             hot_drinks_: 'Hot Drinks',
             hot_drinks_note: 'you can add flavored syrups to all off the above',
 
-            soft_drinks: ['Pepsi', 'Mirinda', '7up', 'Perrier', 'Water', 'XXL'],
+            soft_drinks: ['Soda', 'Carbonated Water', 'Water', 'Energy Drink'],
             soft_drinks_: 'Soft Drinks',
 
             fresh_drinks: ['Orange Juice', 'Carrots', 'Grapefruit'],
