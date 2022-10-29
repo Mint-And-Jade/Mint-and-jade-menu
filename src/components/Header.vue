@@ -7,8 +7,10 @@
             <p>~By I.K. & sons</p>
         </div>
         <div class="absolute right-6 bottom-4">
-            <a href="https://www.instagram.com/mintandjade/" class=""><img class="w-8 opacity-50" src="../assets/instagram-brands.svg" alt="Instagram Logo"></a>
+            <a href="https://www.instagram.com/mintandjade/" target="_blank" class=""><img class="w-8 opacity-50" src="../assets/instagram-brands.svg" alt="Instagram Logo"></a>
         </div>
     </header>
 </template>
+
+
 
