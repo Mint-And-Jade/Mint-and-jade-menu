@@ -59,7 +59,7 @@
                 "items": [
                     {
                         "name": "Slush",
-                        "price": 20000  
+                        "price": 30000  
                     },
                     {
                         "name": "Ice Tea(S)",
@@ -133,19 +133,19 @@
                     },
                     {
                         "name": "Café Latte",
-                        "price": 45000    
+                        "price": 50000    
                     },
                     {
                         "name": "Cappuccino",
-                        "price": 45000    
+                        "price": 50000    
                     },
                     {
                         "name": "Nescafé",
-                        "price": 45000    
+                        "price": 50000    
                     },
                     {
                         "name": "Hot chocolate",
-                        "price": 45000    
+                        "price": 50000    
                     }
                 ],
                 "note": "You can add a flavoured syrup to all of the above for only 15,000 LL"
@@ -164,7 +164,7 @@
                     },
                     {
                         "name": "kaak(3 cheese)",
-                        "price": 45000  
+                        "price": 50000  
                     }
                 ],
                 "note": "You can add chilli sauce to the Kaak"
