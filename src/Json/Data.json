@@ -160,7 +160,7 @@
                 "items": [
                     {
                         "name": "Chips(B)",
-                        "price": 20000 
+                        "price": 25000 
                     },
                     {
                         "name": "kaak(3 cheese)",
@@ -174,15 +174,15 @@
                 "items": [
                     {
                         "name": "Crêpes",
-                        "price": 55000  
+                        "price": 60000  
                     },
                     {
                         "name": "Waffles",
-                        "price": 55000   
+                        "price": 60000   
                     },
                     {
                         "name": "Ice-cream(1 scoop)",
-                        "price": 23000    
+                        "price": 30000    
                     }
                 ],
                 "note": "Desserts are available after 4 pm. You can add many flavors"
