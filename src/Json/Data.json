@@ -19,7 +19,7 @@
                     },
                     {
                         "name": "Water",
-                        "price": 8000 
+                        "price": 10000 
                     }
                 ],
                 "note": ""
@@ -174,11 +174,11 @@
                 "items": [
                     {
                         "name": "Crêpes",
-                        "price": 60000  
+                        "price": 65000  
                     },
                     {
                         "name": "Waffles",
-                        "price": 60000   
+                        "price": 65000   
                     },
                     {
                         "name": "Ice-cream(1 scoop)",
