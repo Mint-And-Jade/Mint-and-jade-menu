@@ -117,35 +117,35 @@
                 "items": [
                     {
                         "name": "Americano",
-                        "price": 30000  
+                        "price": 35000  
                     },
                     {
                         "name": "Espresso Coffee + water",
-                        "price": 30000  
+                        "price": 35000  
                     },
                     {
                         "name": "Espresso coffee",
-                        "price": 25000  
+                        "price": 30000  
                     },
                     {
                         "name": "All kinds of tea",
-                        "price": 25000   
+                        "price": 30000   
                     },
                     {
                         "name": "Café Latte",
-                        "price": 50000    
+                        "price": 55000    
                     },
                     {
                         "name": "Cappuccino",
-                        "price": 50000    
+                        "price": 55000    
                     },
                     {
                         "name": "Nescafé",
-                        "price": 50000    
+                        "price": 55000    
                     },
                     {
                         "name": "Hot chocolate",
-                        "price": 50000    
+                        "price": 55000    
                     }
                 ],
                 "note": "You can add a flavoured syrup to all of the above for only 15,000 LL"
