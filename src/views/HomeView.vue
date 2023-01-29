@@ -96,34 +96,14 @@ export default {
     },
     methods: {
         async fetchData() {
-            await fetch('https://zealous-cyan-katydid.cyclic.app/get-items', { method: 'GET' })
+            await fetch('https://zealous-cyan-katydid.cyclic.app/get-all-page-data', { method: 'GET' })
                 .then((result) => {
                     return result.json()
                 })
-                .then(items => {
-                    this.items = items
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-
-            await fetch('https://zealous-cyan-katydid.cyclic.app/get-sections', { method: 'GET' })
-                .then((result) => {
-                    return result.json()
-                })
-                .then(sections => {
-                    this.sections = sections
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-
-            await fetch('https://zealous-cyan-katydid.cyclic.app/get-categories', { method: 'GET' })
-                .then((result) => {
-                    return result.json()
-                })
-                .then(categories => {
-                    this.categories = categories
+                .then(data => {
+                    this.sections = data[0]
+                    this.categories = data[1]
+                    this.items = data[2]
                 })
                 .catch((err) => {
                     console.log(err);

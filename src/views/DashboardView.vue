@@ -10,8 +10,8 @@
         </nav>
 
 
-       <!-- Loading Circle -->
-       <div role="status" class="h-[20vh] flex justify-center items-center" v-if="fetching">
+        <!-- Loading Circle -->
+        <div role="status" class="h-[20vh] flex justify-center items-center" v-if="fetching">
             <svg aria-hidden="true" class="w-12 h-12 mr-2 text-gray-200 animate-spin dark:text-gray-400 fill-[#59d460]"
                 viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -55,7 +55,8 @@
                 </div>
             </div>
         </div>
-        <div id="submitBtn" class="bg-[#59d460] px-[2rem] py-[1rem] rounded-lg cursor-pointer" @click.once="submitChanges()">Apply Changes
+        <div id="submitBtn" class="bg-[#59d460] px-[2rem] py-[1rem] rounded-lg cursor-pointer"
+            @click.once="submitChanges()">Apply Changes
         </div>
     </main>
 </template>
@@ -65,34 +66,14 @@
 export default {
     methods: {
         async startPage() {
-            await fetch('https://zealous-cyan-katydid.cyclic.app/get-items', { method: 'GET' })
+            await fetch('https://zealous-cyan-katydid.cyclic.app/get-all-page-data', { method: 'GET' })
                 .then((result) => {
                     return result.json()
                 })
-                .then(items => {
-                    this.items = items
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-
-            await fetch('https://zealous-cyan-katydid.cyclic.app/get-sections', { method: 'GET' })
-                .then((result) => {
-                    return result.json()
-                })
-                .then(sections => {
-                    this.sections = sections
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-
-            await fetch('https://zealous-cyan-katydid.cyclic.app/get-categories', { method: 'GET' })
-                .then((result) => {
-                    return result.json()
-                })
-                .then(categories => {
-                    this.categories = categories
+                .then(data => {
+                    this.sections = data[0]
+                    this.categories = data[1]
+                    this.items = data[2]
                 })
                 .catch((err) => {
                     console.log(err);
