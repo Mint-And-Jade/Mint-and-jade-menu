@@ -11,7 +11,7 @@
 
 
         <!-- Loading Circle -->
-        <div role="status" class="h-[20vh] flex justify-center items-center" v-if="fetching">
+        <div role="status" class="h-[20vh] flex justify-center items-center" v-if="fetching && currentTab == 'edit'">
             <svg aria-hidden="true" class="w-12 h-12 mr-2 text-gray-200 animate-spin dark:text-gray-400 fill-[#59d460]"
                 viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -55,8 +55,81 @@
                 </div>
             </div>
         </div>
-        <div id="submitBtn" class="bg-[#59d460] px-[2rem] py-[1rem] rounded-lg cursor-pointer"
-            @click.once="submitChanges()">Apply Changes
+
+
+        <!-- Add -->
+        <div class="w-[375px]" v-if="currentTab == 'add'">
+            <div class="w-full flex justify-start flex-col items-center relative mb-[4rem]">
+                <h2 class="mb-8 text-3xl text-[#59d460] font-semibold">
+                    Add Item
+                </h2>
+                <div
+                    class="mt-1 border-2 rounded-md border-[#59d460] w-full flex items-center flex-col gap-y-16 p-[60px]">
+                    <!-- item name -->
+                    <div class="flex flex-col">
+                        <label class="mb-2" for="name">Name:</label>
+                        <input class="border-2 px-2 py-1 border-[#59d460]" type="text" v-model="itemName">
+                    </div>
+                    <!-- item price -->
+                    <div class="flex flex-col">
+                        <label class="mb-2" for="price">Price:</label>
+                        <input class="border-2 px-2 py-1 border-[#59d460]" type="text" v-model="itemPrice">
+                    </div>
+                    <!-- Categories -->
+                    <div class="flex flex-col w-[225px]">
+                        <label class="mb-2" for="category">Category:</label>
+                        <select class="border-2 px-2 py-1 " name="category" @change="onItemChange($event)">
+                            <option :value="null">--- Select A Category ---</option>
+                            <option :value="category._id" v-for="category in categories">{{ category.name }}</option>
+                        </select>
+                    </div>
+                    <!-- submit button -->
+                    <div class="">
+                        <div id="submit" @click.once="createItem()"
+                            class="bg-[#59d460] p-3 rounded-lg px-6 text-white cursor-pointer">Add
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full flex justify-start flex-col items-center relative">
+                <h2 class="mb-8 text-3xl text-[#59d460] font-semibold">
+                    Add Category
+                </h2>
+                <div
+                    class="mt-1 border-2 rounded-md border-[#59d460] w-full flex items-center flex-col gap-y-16 p-[60px]">
+                    <!-- category name -->
+                    <div class="flex flex-col">
+                        <label class="mb-2" for="name">Name:</label>
+                        <input class="border-2 px-2 py-1 border-[#59d460]" type="text" v-model="categoryName">
+                    </div>
+                    <!-- category note -->
+                    <div class="flex flex-col">
+                        <label class="mb-2" for="name">Note:</label>
+                        <textarea class="border-2 px-2 py-1 border-[#59d460]" v-model="categoryNote" name="note"
+                            id="note" cols="30" rows="10"></textarea>
+                    </div>
+                    <!-- section -->
+                    <div class="flex flex-col w-[225px]">
+                        <label class="mb-2" for="category">Section:</label>
+                        <select class="border-2 px-2 py-1 " name="section" @change="onSectionChange($event)">
+                            <option :value="null">--- Select A Section ---</option>
+                            <option :value="section._id" v-for="section in sections">{{ section.name }}</option>
+                        </select>
+                    </div>
+                    <!-- submit button -->
+                    <div class="">
+                        <div id="submit" @click.once="createCategory"
+                            class="bg-[#59d460] p-3 rounded-lg px-6 text-white">Add</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <div id="submitBtn" v-if="currentTab == 'edit'"
+            class="bg-[#59d460] px-[2rem] py-[1rem] rounded-lg cursor-pointer" @click.once="submitChanges()">Apply
+            Changes
         </div>
     </main>
 </template>
@@ -136,6 +209,30 @@ export default {
 
                     location.reload()
                 })
+        },
+
+        // Add
+        onItemChange(e) {
+            this.itemCategoryId = e.target.value
+        },
+        createItem() {
+            document.querySelector('#submit').style.backgroundColor = "#6e8978"
+            fetch('https://zealous-cyan-katydid.cyclic.app/add-item', { method: 'POST', body: JSON.stringify({ name: this.itemName, price: this.itemPrice, category_id: this.itemCategoryId }), headers: { 'Content-Type': 'application/json' } })
+                .then(() => {
+                    window.localStorage.setItem('pos', window.scrollY)
+                    location.reload()
+                })
+        },
+        onSectionChange(e) {
+            this.categorySectionId = e.target.value
+        },
+        createCategory() {
+            document.querySelector('#submit').style.backgroundColor = "#6e8978"
+            fetch('https://zealous-cyan-katydid.cyclic.app/add-category', { method: 'POST', body: JSON.stringify({ name: this.categoryName, note: this.categoryNote, section_id: this.categorySectionId }), headers: { 'Content-Type': 'application/json' } })
+                .then(() => {
+                    window.localStorage.setItem('pos', window.scrollY)
+                    location.reload()
+                })
         }
     },
     data() {
@@ -148,7 +245,15 @@ export default {
             categories: undefined,
             sections: undefined,
             editedItems: [],
-            fetching: true
+            fetching: true,
+
+            // Add
+            itemName: undefined,
+            itemPrice: undefined,
+            itemCategoryId: undefined,
+            categoryName: undefined,
+            categoryNote: undefined,
+            categorySectionId: undefined
         }
     },
     created() {
