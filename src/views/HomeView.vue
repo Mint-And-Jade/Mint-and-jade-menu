@@ -56,7 +56,7 @@
                                                 <p class="ml-5"> {{ item.name }}</p>
                                             </div>
                                             <div class="w-[75px]">
-                                                {{ item.price }} LL
+                                                {{ item.price.toLocaleString() }} LL
                                             </div>
                                         </div>
                                     </div>
