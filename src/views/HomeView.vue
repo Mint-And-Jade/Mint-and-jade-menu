@@ -34,13 +34,13 @@
 
 
         <main>
-            <div class="w-full h-fit py-10 flex justify-start flex-col items-center text-[.75rem]">
+            <div class="w-full h-fit py-10 flex justify-start flex-col items-center text-[.955rem]">
                 <div class="flex justify-start flex-col items-center" v-for="section in data">
 
                     <h2 class=" mb-8 text-3xl text-[#59d460] font-semibold">{{ section.name }}</h2>
                     <div class="mb-14" v-for="category in section.categories">
 
-                        <div class="w-[75vw] h-fit">
+                        <div class="w-[80vw] h-fit ml-4">
                             <div class="relative flex">
                                 <img class="w-8 absolute left-[-2rem]" src="../assets/icon.svg" alt="Leaf">
                                 <h2 class="ml-1">{{ category.name }}</h2>
