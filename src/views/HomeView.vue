@@ -50,12 +50,12 @@
                                     <div class="relative max-h-[28px]" v-for="item in category.items">
                                         <div class="flex justify-between">
                                             <!-- wrapper -->
-                                            <div class="w-[75%]">
+                                            <div class="">
                                                 <img src="../assets/dot.svg" alt=""
                                                     class="w-[8px] rounded-full absolute top-[.6rem]">
                                                 <p class="ml-5"> {{ item.name }}</p>
                                             </div>
-                                            <div class="w-[75px]">
+                                            <div class="">
                                                 {{ item.price.toLocaleString() }} $
                                             </div>
                                         </div>
