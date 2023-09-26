@@ -1,3 +1,4 @@
+<!-- TODO: Delete confirmation, Edit Notes, Edit Sections -->
 <template>
     <main class="w-full h-fit py-10 flex items-center flex-col">
         <!-- nav -->
@@ -44,8 +45,9 @@
                             <input class="w-[70%]" v-model="data[indexS].categories[indexC].items[index].name"
                                 @focus="itemEdited(data[indexS].categories[indexC].items[index])">
                             <div class="">
-                                <input class="max-w-[3rem]" v-model="data[indexS].categories[indexC].items[index].price"
-                                    @focus="itemEdited(data[indexS].categories[indexC].items[index])">LL
+                                
+                                <input class="max-w-[3.5rem] border" v-model="data[indexS].categories[indexC].items[index].price"
+                                    @focus="itemEdited(data[indexS].categories[indexC].items[index])">LBP
                             </div>
                         </div>
                         <div id="" :data-itemId="item._id"
