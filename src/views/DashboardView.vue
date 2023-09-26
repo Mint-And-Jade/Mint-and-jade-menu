@@ -1,4 +1,4 @@
-<!-- TODO: Delete confirmation, Edit Notes, Edit Sections, Authorization -->
+<!-- TODO: Delete confirmation color, Edit Notes, Edit Sections, Authorization -->
 <template>
   <main class="w-full h-fit py-10 flex items-center flex-col">
     <!-- nav -->
