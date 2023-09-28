@@ -1,4 +1,4 @@
-<!-- TODO: Delete confirmation color, Edit Notes, Edit Sections, Authorization -->
+<!-- TODO: Delete confirmation color, Edit Notes, Edit Sections, Authorization, Increment Each item in a category: low  -->
 <template>
   <main class="w-full h-fit py-10 flex items-center flex-col">
     <!-- nav -->
@@ -57,6 +57,12 @@
           <p class="absolute top-[-30px] left-[-0px] italic">
             {{ category.name }}
           </p>
+          <p
+            @click="toggleModal(category)"
+            class="cursor-pointer absolute top-[-30px] left-[100px] text-[#59d460]"
+          >
+            Edit
+          </p>
           <!-- foreach item -->
           <div
             v-for="(item, index) in category.items"
@@ -84,11 +90,14 @@
             <div
               id="delete"
               :data-itemId="item._id"
-              class="px-[1rem] py-[.5rem] rounded-lg bg-red-500 hover:cursor-pointer"
+              class="px-[1rem] py-[.5rem] rounded-lg bg-red-500 hover:cursor-pointer unselectable"
               @click="deleteItem(section._id, category._id, item._id)"
             >
               Delete
             </div>
+          </div>
+          <div class="mt-4 italic" v-if="category.note">
+            Note: {{ category.note }}
           </div>
         </div>
       </div>
@@ -202,6 +211,52 @@
       </div>
     </div>
 
+    <!-- Category Edit Modal -->
+    <div
+      v-if="modalState"
+      @click.self="modalState = false"
+      style="background-color: rgba(0, 0, 0, 0.6)"
+      class="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center cursor-pointer"
+    >
+      <div
+        class="w-[90vw] h-[80vh] bg-white rounded-xl p-[2rem] flex justify-evenly flex-col text-l cursor-default"
+      >
+        <!-- Modal Body -->
+        <div class="flex justify-evenly">
+          <h2>Category Name:</h2>
+          <input
+            class="border p-2 w-[40%]"
+            v-model="modalCategoryName"
+            type="text"
+          />
+        </div>
+        <div class="flex justify-evenly">
+          <h2>Category Note:</h2>
+          <textarea
+            class="border p-2 w-[40%]"
+            v-model="modalCategoryNote"
+            name=""
+            id=""
+          ></textarea>
+        </div>
+        <div class="flex justify-evenly">
+          <div
+            class="bg-[#59d460] px-[2rem] py-[1rem] rounded-lg cursor-pointer"
+            @click.once="submitCategoryChanges()"
+          >
+            Apply Changes
+          </div>
+          <div
+            id="deleteCat"
+            class="bg-red-500 px-[2rem] py-[1rem] rounded-lg cursor-pointer"
+            @click="deleteCategory(modalCategoryId)"
+          >
+            Delete
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Submit -->
     <div
       id="submitBtn"
@@ -218,7 +273,7 @@
 export default {
   methods: {
     async startPage() {
-      await fetch("https://zealous-cyan-katydid.cyclic.app/get-all-page-data", {
+      await fetch(`${this.hostName}/get-all-page-data`, {
         method: "GET",
       })
         .then((result) => {
@@ -268,9 +323,9 @@ export default {
       this.editStyle = "cursor-pointer text-[#59d460]";
     },
     deleteItem(sectionId, categoryId, itemId) {
-        console.log(this.deleteButtonPressCount);
+      console.log(this.deleteButtonPressCount);
       if (this.deleteButtonPressCount >= 2) {
-        fetch("https://zealous-cyan-katydid.cyclic.app/delete-item", {
+        fetch(`${this.hostName}/delete-item`, {
           method: "DELETE",
           body: JSON.stringify({ item_id: itemId }),
           headers: { "Content-Type": "application/json" },
@@ -281,7 +336,7 @@ export default {
       } else {
         let button = document.querySelector("#delete");
         this.deleteButtonPressCount++;
-        button.style.color = "black"
+        button.style.color = "black";
         setTimeout(() => {
           this.deleteButtonPressCount--;
           button.style =
@@ -304,11 +359,14 @@ export default {
     },
     submitChanges() {
       document.querySelector("#submitBtn").style.backgroundColor = "#6e8978";
-      fetch("https://zealous-cyan-katydid.cyclic.app/edit-items", {
+      fetch(`${this.hostName}/edit-items`, {
         method: "PUT",
         body: JSON.stringify({ editedItems: this.editedItems }),
         headers: { "Content-Type": "application/json" },
-      }).then(() => {
+      }).then((result) => {
+        return result.json()
+      })
+      .then((data) => {
         location.reload();
       });
     },
@@ -319,7 +377,7 @@ export default {
     },
     createItem() {
       document.querySelector("#submit").style.backgroundColor = "#6e8978";
-      fetch("https://zealous-cyan-katydid.cyclic.app/add-item", {
+      fetch(`${this.hostName}/add-item`, {
         method: "POST",
         body: JSON.stringify({
           name: this.itemName,
@@ -337,7 +395,7 @@ export default {
     },
     createCategory() {
       document.querySelector("#submit").style.backgroundColor = "#6e8978";
-      fetch("https://zealous-cyan-katydid.cyclic.app/add-category", {
+      fetch(`${this.hostName}/add-category`, {
         method: "POST",
         body: JSON.stringify({
           name: this.categoryName,
@@ -350,9 +408,48 @@ export default {
         location.reload();
       });
     },
+
+    // Edit Modal
+    toggleModal(category) {
+      this.modalState = !this.modalState;
+      this.modalCategoryName = category.name;
+      this.modalCategoryId = category._id;
+      this.modalCategoryNote = category.note;
+      console.log(category);
+    },
+
+    deleteCategory(categoryId) {
+      fetch(`${this.hostName}/delete-category`, {
+          method: "DELETE",
+          body: JSON.stringify({ category_id: categoryId }),
+          headers: { "Content-Type": "application/json" },
+        }).then(() => {
+          window.localStorage.setItem("pos", window.scrollY);
+          location.reload();
+        });
+    },
+
+    submitCategoryChanges() {
+      fetch(`${this.hostName}/edit-categories`, {
+        method: "PUT",
+        body: JSON.stringify({
+          editedCategory: [
+            {
+              _id: this.modalCategoryId,
+              name: this.modalCategoryName,
+              note: this.modalCategoryNote,
+            },
+          ],
+        }),
+        headers: { "Content-Type": "application/json" },
+      }).then(() => {
+        location.reload();
+      });
+    },
   },
   data() {
     return {
+      hostName: "https://zealous-cyan-katydid.cyclic.app",
       currentTab: "edit",
       addStyle: "cursor-pointer",
       editStyle: "cursor-pointer text-[#59d460]",
@@ -371,6 +468,12 @@ export default {
       categoryName: undefined,
       categoryNote: undefined,
       categorySectionId: undefined,
+
+      // Modal
+      modalState: false,
+      modalCategoryName: "",
+      modalCategoryId: undefined,
+      modalCategoryNote: undefined,
     };
   },
   created() {
@@ -390,5 +493,13 @@ input:focus {
 
 .overlay {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 </style>
