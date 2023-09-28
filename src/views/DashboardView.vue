@@ -88,10 +88,10 @@
               </div>
             </div>
             <div
-              id="delete"
+              :id="item._id"
               :data-itemId="item._id"
               class="px-[1rem] py-[.5rem] rounded-lg bg-red-500 hover:cursor-pointer unselectable"
-              @click="deleteItem(section._id, category._id, item._id)"
+              @click="openDeleteConfirmation(item)"
             >
               Delete
             </div>
@@ -247,9 +247,37 @@
             Apply Changes
           </div>
           <div
-            id="deleteCat"
             class="bg-red-500 px-[2rem] py-[1rem] rounded-lg cursor-pointer"
-            @click="deleteCategory(modalCategoryId)"
+            @click="modalState = false;openDeleteConfirmation(this.modalCategory)"
+          >
+            Delete
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div
+      v-if="deleteModalState"
+      @click.self="deleteModalState = false"
+      style="background-color: rgba(0, 0, 0, 0.6)"
+      class="fixed top-0 bottom-0 right-0 left-0 flex justify-center items-center cursor-pointer"
+    >
+      <div
+        class="w-[90vw] h-[80vh] bg-white rounded-xl p-[2rem] flex justify-evenly flex-col text-l cursor-default"
+      >
+        <!-- Modal Body -->
+        <h1 class="self-center">Are you sure you want to delete <span class="font-bold">{{ this.deleteModalData.name }}</span>?</h1>
+          <div class="flex justify-evenly">
+          <div
+            class="bg-[#59d460] px-[2rem] py-[1rem] rounded-lg cursor-pointer"
+            @click="deleteModalState = false"
+          >
+            Go Back
+          </div>
+          <div
+            class="bg-red-500 px-[2rem] py-[1rem] rounded-lg cursor-pointer"
+            @click="deleteData()"
           >
             Delete
           </div>
@@ -322,27 +350,15 @@ export default {
       this.addStyle = "cursor-pointer";
       this.editStyle = "cursor-pointer text-[#59d460]";
     },
-    deleteItem(sectionId, categoryId, itemId) {
-      console.log(this.deleteButtonPressCount);
-      if (this.deleteButtonPressCount >= 2) {
-        fetch(`${this.hostName}/delete-item`, {
-          method: "DELETE",
-          body: JSON.stringify({ item_id: itemId }),
-          headers: { "Content-Type": "application/json" },
-        }).then(() => {
-          window.localStorage.setItem("pos", window.scrollY);
-          location.reload();
-        });
-      } else {
-        let button = document.querySelector("#delete");
-        this.deleteButtonPressCount++;
-        button.style.color = "black";
-        setTimeout(() => {
-          this.deleteButtonPressCount--;
-          button.style =
-            "px-[1rem] py-[.5rem] rounded-lg bg-red-500 hover:cursor-pointer";
-        }, 1500);
-      }
+    deleteItem(itemId) {
+      fetch(`${this.hostName}/delete-item`, {
+        method: "DELETE",
+        body: JSON.stringify({ item_id: itemId }),
+        headers: { "Content-Type": "application/json" },
+      }).then(() => {
+        window.localStorage.setItem("pos", window.scrollY);
+        location.reload();
+      });
     },
     itemEdited(item) {
       let inList = false;
@@ -363,12 +379,13 @@ export default {
         method: "PUT",
         body: JSON.stringify({ editedItems: this.editedItems }),
         headers: { "Content-Type": "application/json" },
-      }).then((result) => {
-        return result.json()
       })
-      .then((data) => {
-        location.reload();
-      });
+        .then((result) => {
+          return result.json();
+        })
+        .then((data) => {
+          location.reload();
+        });
     },
 
     // Add
@@ -415,18 +432,18 @@ export default {
       this.modalCategoryName = category.name;
       this.modalCategoryId = category._id;
       this.modalCategoryNote = category.note;
-      console.log(category);
+      this.modalCategory = category
     },
 
     deleteCategory(categoryId) {
       fetch(`${this.hostName}/delete-category`, {
-          method: "DELETE",
-          body: JSON.stringify({ category_id: categoryId }),
-          headers: { "Content-Type": "application/json" },
-        }).then(() => {
-          window.localStorage.setItem("pos", window.scrollY);
-          location.reload();
-        });
+        method: "DELETE",
+        body: JSON.stringify({ category_id: categoryId }),
+        headers: { "Content-Type": "application/json" },
+      }).then(() => {
+        window.localStorage.setItem("pos", window.scrollY);
+        location.reload();
+      });
     },
 
     submitCategoryChanges() {
@@ -446,6 +463,21 @@ export default {
         location.reload();
       });
     },
+
+    // Delete Modal
+    openDeleteConfirmation(data) {
+      this.deleteModalState = true;
+      this.deleteModalData = data;
+    },
+
+    deleteData() {
+      if (this.deleteModalData.section_id) {
+        this.deleteCategory(this.deleteModalData._id)
+      }
+      else if (this.deleteModalData.category_id) {
+        this.deleteItem(this.deleteModalData._id)
+      }
+    }
   },
   data() {
     return {
@@ -459,7 +491,6 @@ export default {
       sections: undefined,
       editedItems: [],
       fetching: true,
-      deleteButtonPressCount: 0,
 
       // Add
       itemName: undefined,
@@ -469,11 +500,16 @@ export default {
       categoryNote: undefined,
       categorySectionId: undefined,
 
-      // Modal
+      // Edit Modal
       modalState: false,
+      modalCategory: {},
       modalCategoryName: "",
       modalCategoryId: undefined,
       modalCategoryNote: undefined,
+
+      // Delete Modal
+      deleteModalState: false,
+      deleteModalData: {},
     };
   },
   created() {
@@ -496,10 +532,10 @@ input:focus {
 }
 
 .unselectable {
-    -moz-user-select: -moz-none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
-    user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 </style>
