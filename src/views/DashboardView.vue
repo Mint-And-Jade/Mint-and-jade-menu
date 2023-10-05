@@ -1,4 +1,4 @@
-<!-- TODO: Delete confirmation color, Edit Notes, Edit Sections, Authorization, Increment Each item in a category: low  -->
+<!-- TODO:  Authorization, Increment Each item in a category: low  -->
 <template>
   <main class="w-full h-fit py-10 flex items-center flex-col">
     <!-- nav -->

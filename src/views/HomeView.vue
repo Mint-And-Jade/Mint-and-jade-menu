@@ -35,7 +35,7 @@
 
 
         <main>
-            <div class="w-full h-fit py-10 flex justify-start flex-col items-center text-[.955rem]">
+            <div class="w-full h-fit py-10 flex justify-start flex-col items-center text-[.85rem]">
                 <div class="flex justify-start flex-col items-center" v-for="section in data">
 
                     <h2 class=" mb-8 text-3xl text-[#59d460] font-semibold">{{ section.name }}</h2>
@@ -80,7 +80,6 @@
 
 
 <script>
-import Data from '../Json/Data.json' assert {type: 'json'};
 
 export default {
     data() {
