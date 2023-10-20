@@ -46,17 +46,17 @@
                                 <img class="w-8 absolute left-[-2rem]" src="../assets/icon.svg" alt="Leaf">
                                 <h2 class="ml-1">{{ category.name }}</h2>
                             </div>
-                            <div class="mt-1 border-2 rounded-md p-4 border-[#59d460]">
-                                <div class="flex flex-col flex-wrap leading-7">
-                                    <div class="relative max-h-[28px]" v-for="item in category.items">
-                                        <div class="flex justify-between">
+                            <div class="mt-1 border-2 rounded-md p-4 h-fit border-[#59d460]">
+                                <div class="flex flex-col leading-7">
+                                    <div class="relative " v-for="item in category.items">
+                                        <div class="flex justify-between mb-3">
                                             <!-- wrapper -->
-                                            <div class="">
+                                            <div class="flex items-center">
                                                 <img src="../assets/dot.svg" alt=""
-                                                    class="w-[8px] rounded-full absolute top-[.6rem]">
-                                                <p class="ml-5"> {{ item.name }}</p>
+                                                    class="w-[8px] rounded-full top-[.6rem]">
+                                                <p class="ml-3 w-[140px]"> {{ item.name }}</p>
                                             </div>
-                                            <div class="">
+                                            <div class="flex items-center">
                                                 {{ item.price.toLocaleString() }} LBP
                                             </div>
                                         </div>
