@@ -481,7 +481,7 @@ export default {
   },
   data() {
     return {
-      hostName: "https://zealous-cyan-katydid.cyclic.app",
+      hostName: "https://back-end-mint-and-jade-menu.onrender.com",
       currentTab: "edit",
       addStyle: "cursor-pointer",
       editStyle: "cursor-pointer text-[#59d460]",
