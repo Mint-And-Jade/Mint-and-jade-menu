@@ -96,7 +96,7 @@ export default {
     },
     methods: {
         async fetchData() {
-            await fetch('https://zealous-cyan-katydid.cyclic.app/get-all-page-data', { method: 'GET' })
+            await fetch('https://back-end-mint-and-jade-menu.onrender.com/get-all-page-data', { method: 'GET' })
                 .then((result) => {
                     return result.json()
                 })
