@@ -481,7 +481,7 @@ export default {
   },
   data() {
     return {
-      hostName: "https://back-end-mint-and-jade-menu.onrender.com",
+      hostName: "https://back-end-mint-and-jade-menu-my284ahro-yorgis-projects-34ca0fbd.vercel.app",
       currentTab: "edit",
       addStyle: "cursor-pointer",
       editStyle: "cursor-pointer text-[#59d460]",

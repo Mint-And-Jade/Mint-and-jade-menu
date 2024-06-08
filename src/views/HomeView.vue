@@ -96,7 +96,7 @@ export default {
     },
     methods: {
         async fetchData() {
-            await fetch('https://back-end-mint-and-jade-menu.onrender.com/get-all-page-data', { method: 'GET' })
+            await fetch('https://back-end-mint-and-jade-menu-my284ahro-yorgis-projects-34ca0fbd.vercel.app/get-all-page-data', { method: 'GET' })
                 .then((result) => {
                     return result.json()
                 })
